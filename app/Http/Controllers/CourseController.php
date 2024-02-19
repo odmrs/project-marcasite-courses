@@ -15,11 +15,17 @@ class CourseController extends Controller
      */
     public function index(): Response
     {
+        $courses = Course::with('user:id,name')->latest()->get();
+
         return Inertia::render('Courses/Index', [
-            //
+            'courses' => $courses,
         ]);
     }
 
+    public function newCourse()
+    {
+        return Inertia::render('Courses/Create');
+    }
     /**
      * Show the form for creating a new resource.
      */
