@@ -31,7 +31,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('courses.create'), {
+    form.post(route('courses.store'), {
         onFinish: () => form.reset(),
     });
 };
@@ -120,7 +120,7 @@ const submit = () => {
                 type="number"
                 class="mt-1 block w-full"
                 v-model="form.max_students"
-                min="5"
+                min=5
                 required
             />
             <InputError class="mt-2" :message="form.errors.max_students" />

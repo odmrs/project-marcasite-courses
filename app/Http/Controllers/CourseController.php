@@ -45,7 +45,7 @@ class CourseController extends Controller
             'course_price' => 'required|numeric|min:0',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
-            'max_students' => 'nullable|integer|min:5',
+            'max_students' => 'required|integer|min:5',
         ]);
 
         $request->user()->courses()->create($validated);

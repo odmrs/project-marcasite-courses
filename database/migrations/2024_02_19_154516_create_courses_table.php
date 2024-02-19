@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->decimal('course_price', 8, 2);
             $table->date('start_date');
             $table->date('end_date');
-            $table->integer('max_students')->nullable();
+            $table->integer('max_students');
             $table->timestamps();
         });
     }
