@@ -32,4 +32,5 @@ Route::resource('courses', CourseController::class)
     ->middleware(['auth', 'verified']);
 
 Route::match(['get', 'post'], '/courses/create', [CourseController::class, 'newCourse'])->name('courses.create');
+
 require __DIR__ . '/auth.php';
