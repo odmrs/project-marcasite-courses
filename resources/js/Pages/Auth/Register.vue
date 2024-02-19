@@ -9,11 +9,21 @@ import { Head, Link, useForm } from '@inertiajs/vue3';
 const form = useForm({
     name: '',
     email: '',
+    is_admin: null,
     password: '',
     password_confirmation: '',
 });
 
+// Convert the field is_admin to boolean
+const convertToBoolean = () => {
+    form.is_admin = JSON.parse(form.is_admin);
+};
+
 const submit = () => {
+    if (form.is_admin === null) {
+        delete form.is_admin;
+    }
+
     form.post(route('register'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
@@ -22,11 +32,11 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Register" />
+        <Head title="Registro de úsuario" />
 
         <form @submit.prevent="submit">
             <div>
-                <InputLabel for="name" value="Name" />
+                <InputLabel for="name" value="Seu nome" />
 
                 <TextInput
                     id="name"
@@ -42,7 +52,7 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="email" value="Email" />
+                <InputLabel for="email" value="Seu e-mail" />
 
                 <TextInput
                     id="email"
@@ -57,7 +67,18 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="password" value="Password" />
+                <InputLabel for="is_admin" value="Tipo de úsuario" />
+                <br>
+                <select v-model="form.is_admin" @change="convertToBoolean">
+                <option disabled value="">Escolha o tipo de úsuario</option>
+                <option value="true">Administrador</option>
+                <option value="false">Úsuario Comum</option>
+                </select>
+                <InputError class="mt-2" :message="form.errors.is_admin"/>
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="password" value="Sua senha" />
 
                 <TextInput
                     id="password"
@@ -91,11 +112,11 @@ const submit = () => {
                     :href="route('login')"
                     class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
-                    Already registered?
+                    Já está registrado?
                 </Link>
 
                 <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Register
+                    Registrar
                 </PrimaryButton>
             </div>
         </form>
