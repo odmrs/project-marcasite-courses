@@ -33,6 +33,7 @@ Route::resource('courses', CourseController::class)
 
 Route::match(['get', 'post'], '/courses/create', [CourseController::class, 'newCourse'])->name('courses.create');
 
+// Download files
 Route::get('/downloads/{filename}', function ($filename) {
     $path = storage_path('app/uploads/' . $filename);
 
