@@ -50,7 +50,7 @@ class CourseController extends Controller
 
         $request->user()->courses()->create($validated);
 
-        return redirect(route('login'));
+        return redirect(route('courses.index'));
     }
 
     /**
@@ -72,10 +72,23 @@ class CourseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Course $course)
+    public function update(Request $request, Course $course): RedirectResponse
     {
-        //
+        $this->authorize('update', $course);
+        $validated = $request->validate([
+            'course_name' => 'required|string|max:255',
+            'course_description' => 'required|string',
+            'course_price' => 'required|numeric|min:0',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+            'max_students' => 'required|integer|min:5',
+        ]);
+
+        $course->update($validated);
+
+        return redirect(route('courses.index'));
     }
+
 
     /**
      * Remove the specified resource from storage.

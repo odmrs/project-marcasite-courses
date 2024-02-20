@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('courses', CourseController::class)
-    ->only('index', 'store')
+    ->only(['index', 'store', 'update'])
     ->middleware(['auth', 'verified']);
 
 Route::match(['get', 'post'], '/courses/create', [CourseController::class, 'newCourse'])->name('courses.create');

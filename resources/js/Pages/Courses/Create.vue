@@ -16,7 +16,6 @@ defineProps({
 });
 
 const updateEndDateMin = () => {
-    // Atualiza a data mínima para a data final como sendo a mesma que a data de início
     form.end_date = form.start_date;
 };
 
@@ -56,10 +55,8 @@ const submit = () => {
             />
             <InputError class="mt-2" :message="form.errors.course_name" />
         </div>
-
-        <!-- Campo de texto para a descrição do curso -->
         <div>
-            <InputLabel for="course_description" value="Descrição do curso" />
+            <textarea for="course_description" value="Descrição do curso" />
             <TextInput
                 id="course_description"
                 type="text"
@@ -70,7 +67,6 @@ const submit = () => {
             <InputError class="mt-2" :message="form.errors.course_description" />
         </div>
 
-        <!-- Campo de texto para o preço do curso -->
         <div>
             <InputLabel for="course_price" value="Preço do curso" />
             <TextInput
@@ -83,8 +79,6 @@ const submit = () => {
             />
             <InputError class="mt-2" :message="form.errors.course_price" />
         </div>
-
-        <!-- Campo de data para a data de início do curso -->
         <div>
             <InputLabel for="start_date" value="Data de ínicio" />
             <input
@@ -97,8 +91,6 @@ const submit = () => {
             />
             <InputError class="mt-2" :message="form.errors.start_date" />
         </div>
-
-        <!-- Campo de data para a data final do curso -->
         <div>
             <InputLabel for="end_date" value="Data final" />
             <input
@@ -111,8 +103,6 @@ const submit = () => {
             />
             <InputError class="mt-2" :message="form.errors.end_date" />
         </div>
-
-        <!-- Campo de número para a quantidade máxima de alunos -->
         <div>
             <InputLabel for="max_students" value="Quantidade maxima de alunos" />
             <TextInput
