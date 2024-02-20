@@ -33,4 +33,14 @@ Route::resource('courses', CourseController::class)
 
 Route::match(['get', 'post'], '/courses/create', [CourseController::class, 'newCourse'])->name('courses.create');
 
+Route::get('/downloads/{filename}', function ($filename) {
+    $path = storage_path('app/uploads/' . $filename);
+
+    if (!file_exists($path)) {
+        abort(404);
+    }
+
+    return response()->download($path);
+})->where('filename', '.*');
+
 require __DIR__ . '/auth.php';

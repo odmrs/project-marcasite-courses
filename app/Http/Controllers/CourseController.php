@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
+
 class CourseController extends Controller
 {
     /**
@@ -46,7 +47,14 @@ class CourseController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'max_students' => 'required|integer|min:5',
+            'file_upload' => 'required|mimes:csv,txt,xlx,xls,pdf|max:2048'
         ]);
+
+        if ($request->hasFile('file_upload')) {
+            $filename = uniqid() . '.' . $request->file('file_upload')->getClientOriginalExtension();
+            $file_upload = $request->file('file_upload')->storeAs('uploads', $filename);
+            $validated['file_upload'] = $filename;
+        }
 
         $request->user()->courses()->create($validated);
 
@@ -82,6 +90,7 @@ class CourseController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'max_students' => 'required|integer|min:5',
+            'file_upload' => 'nullable|file|mimes:pdf,doc,docx|max:10240',
         ]);
 
         $course->update($validated);

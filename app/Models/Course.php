@@ -17,6 +17,7 @@ class Course extends Model
         'start_date',
         'end_date',
         'max_students',
+        'file_upload'
     ];
 
     public function user(): BelongsTo

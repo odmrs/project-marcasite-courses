@@ -23,6 +23,7 @@ const form = useForm({
     start_date: props.course.start_date,
     end_date: props.course.end_date,
     max_students: props.course.max_students,
+    file_upload: props.course.file_upload,
     remember: false
 });
 
@@ -55,7 +56,7 @@ const editing = ref(false);
                 </Dropdown>
               </div>
               <!-- Start of form -->
-              <form v-if="editing" @submit.prevent="form.put(route('courses.update', { course: course.id }), { onSuccess: () => editing = false })">
+              <form v-if="editing" @submit.prevent="form.put(route('courses.update', { course: course.id }), { onSuccess: () => editing = false })" enctype="multipart/form-data">
                 <!-- course name  -->
                 <div class="mt-4">
                   <label for="course_name" class="block text-sm font-medium text-gray-700">Course Name</label>
@@ -106,12 +107,25 @@ const editing = ref(false);
                   <input v-model="form.max_students" type="number" id="max_students" name="max_students" class="mt-1 p-2 block w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" min="5">
                   <InputError :max_students="form.errors.max_students" class="mt-2" />
                 </div>
+                <!-- add file  -->
+                <div class="mt-4">
+                    <label for="file_upload" class="block text-sm font-medium text-gray-700">Upload de arquivo</label>
+                    <input 
+                        type="file" 
+                        id="file_upload" 
+                        name="file_upload" 
+                        class="mt-1 p-2 block w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
+                        accept=".pdf,.doc,.docx"
+                        @change="handleFileUpload"
+                    >
+                    <InputError :file_upload="form.errors.file_upload" class="mt-2" />
+                </div>
                 <div class="space-x-2 mt-4">
                   <PrimaryButton>Save</PrimaryButton>
                   <button @click="editing = false; form.reset(); form.clearErrors()">Cancel</button>
                 </div>
             </form>
-              <!-- end of form  -->
+      <!-- table for list  -->
       <div class="w-full overflow-x-auto">
         <table class="w-full border-collapse">
           <thead>
@@ -122,6 +136,7 @@ const editing = ref(false);
               <th class="px-4 py-2">Data de Início</th>
               <th class="px-4 py-2">Data de Término</th>
               <th class="px-4 py-2">Max. de Alunos</th>
+              <th class="px-4 py-2">Material</th>
             </tr>
           </thead>
           <tbody>
@@ -132,6 +147,14 @@ const editing = ref(false);
               <td class="px-4 py-2">{{ course.start_date }}</td>
               <td class="px-4 py-2">{{ course.end_date }}</td>
               <td class="px-4 py-2">{{ course.max_students }}</td>
+              <td class="px-4 py-2">
+                  <template v-if="course.file_upload">
+                      <a :href="'/downloads/' + course.file_upload" download class="text-blue-500 hover:underline">Baixar</a>
+                  </template>
+                  <template v-else>
+                      <span class="text-gray-500">Sem Material</span>
+                  </template>
+              </td>
             </tr>
           </tbody>
         </table>

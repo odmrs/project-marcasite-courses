@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->date('start_date');
             $table->date('end_date');
             $table->integer('max_students');
+            $table->string('file_upload')->nullable();
             $table->timestamps();
         });
     }

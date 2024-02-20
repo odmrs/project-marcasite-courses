@@ -26,8 +26,15 @@ const form = useForm({
     start_date: '',
     end_date: '',
     max_students: '',
+    file_upload: null,
     remember: false
 });
+
+// handle the file using js 
+const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    form.file_upload = file;
+};
 
 const submit = () => {
     form.post(route('courses.store'), {
@@ -43,7 +50,7 @@ const submit = () => {
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
-        <form @submit.prevent="submit">
+        <form @submit.prevent="submit" enctype="multipart/form-data">
         <div>
             <InputLabel for="course_name" value="Nome do curso" />
             <TextInput
@@ -56,7 +63,7 @@ const submit = () => {
             <InputError class="mt-2" :message="form.errors.course_name" />
         </div>
         <div>
-            <textarea for="course_description" value="Descrição do curso" />
+            <InputLabel for="course_description" value="Descrição do curso" />
             <TextInput
                 id="course_description"
                 type="text"
@@ -66,7 +73,6 @@ const submit = () => {
             />
             <InputError class="mt-2" :message="form.errors.course_description" />
         </div>
-
         <div>
             <InputLabel for="course_price" value="Preço do curso" />
             <TextInput
@@ -115,6 +121,18 @@ const submit = () => {
             />
             <InputError class="mt-2" :message="form.errors.max_students" />
         </div>
+
+        <div class="mt-4">
+            <InputLabel for="file_upload" value="Upload de Arquivo" />
+            <input
+                id="file_upload"
+                type="file"
+                class="mt-1 block w-full"
+                @change="handleFileUpload"
+            />
+            <InputError class="mt-2" :message="form.errors.file_upload" />
+        </div>
+
         <div class="flex items-center justify-end mt-4">
                 <Link
                     :href="route('courses.index')"
