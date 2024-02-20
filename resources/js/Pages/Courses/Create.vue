@@ -1,10 +1,14 @@
-<script setup>
+<script>
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import {
+    Head,
+    Link,
+    useForm
+} from '@inertiajs/vue3';
 
 defineProps({
     canResetPassword: {
@@ -37,22 +41,17 @@ const submit = () => {
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Cadastro de cursos" />
+<GuestLayout>
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
-        </div>
-        <form @submit.prevent="submit">
+    <Head title="Cadastro de cursos" />
+
+    <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        {{ status }}
+    </div>
+    <form @submit.prevent="submit">
         <div>
             <InputLabel for="course_name" value="Nome do curso" />
-            <TextInput
-                id="course_name"
-                type="text"
-                class="mt-1 block w-full"
-                v-model="form.course_name"
-                required
-            />
+            <TextInput id="course_name" type="text" class="mt-1 block w-full" v-model="form.course_name" required />
             <InputError class="mt-2" :message="form.errors.course_name" />
         </div>
         <div>
