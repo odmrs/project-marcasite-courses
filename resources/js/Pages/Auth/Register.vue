@@ -24,7 +24,7 @@ const submit = () => {
         delete form.is_admin;
     }
 
-    form.post(route('Register'), {
+    form.post(route('register'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
 };

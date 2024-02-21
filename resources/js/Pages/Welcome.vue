@@ -23,36 +23,38 @@ defineProps({
     <Head title="Welcome" />
 
     <div class="relative min-h-screen bg-center bg-gray-100">
-        <!-- Imagem de boas-vindas -->
+        <!-- Image -->
         <div class="flex justify-center items-center">
             <img src="/storage/images/center-image.png" alt="Marcasite Logo criada por Marcos" style="max-width: 35%; height: auto;">
         </div>
-
+        <template v-if="$page.props.auth.user">
         <!-- Botões de login/registrar -->
-        <div class="top-0 right-0 p-6 text-center">
-            <Link
-        v-if="$page.props.auth.user"
-        :href="route('dashboard')"
-        class="font-semibold text-white bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800 px-4 py-2 rounded-md mb-4 sm:mb-0 sm:me-4 w-500 sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100"
-    >
-        Painel de Administrador
-    </Link>
-
-    <template v-else>
-        <Link
-            :href="route('login')"
+            <div class="top-0 right-0 p-6 text-center">
+                <Link
+            v-if="$page.props.auth.user && $page.props.auth.user.is_admin"
+            :href="route('dashboard')"
             class="font-semibold text-white bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800 px-4 py-2 rounded-md mb-4 sm:mb-0 sm:me-4 w-500 sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100"
         >
-            Log in
-        </Link>
-
-        <Link
-            v-if="canRegister"
-            :href="route('register')"
-            class="font-semibold text-white bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800 px-4 py-2 rounded-md w-500 sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+            Painel de Administrador
+                </Link>
+                <Link
+            v-else
+            :href="route('courses.index')"
+            class="font-semibold text-white bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800 px-4 py-2 rounded-md mb-4 sm:mb-0 sm:me-4 w-500 sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100"
         >
-            Register
-        </Link>
+            Painel do úsuario
+                </Link>
+            </div>
+        </template>
+    <template v-else>
+        <div class="top-0 right-0 p-6 text-center">
+            <Link
+                :href="route('login')"
+                class="font-semibold text-white bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800 px-4 py-2 rounded-md mb-4 sm:mb-0 sm:me-4 w-500 sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+            >
+                Log in
+            </Link>
+        </div>
     </template>
         </div>
 
@@ -62,5 +64,4 @@ defineProps({
                 <a href="https://github.com/odmrs" target="_blank">Criado por: Marcos Vinícius (odmrs)</a>
             </div>
         </div>
-    </div>
 </template>

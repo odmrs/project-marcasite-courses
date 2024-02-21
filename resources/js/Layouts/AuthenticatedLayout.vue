@@ -20,16 +20,22 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
+                                <Link :href="route('dashboard')" v-if="$page.props.auth.user.is_admin">
                                     <ApplicationLogo
                                         class="block h-9 w-auto fill-current text-gray-800"
                                     />
                                 </Link>
+                                <Link :href="route('courses.index')" v-else>
+                                    <ApplicationLogo
+                                        class="block h-9 w-auto fill-current text-gray-800"
+                                    />
+                                </Link>
+                                
                             </div>
 
                             <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" >
+                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')" v-if="$page.props.auth.user.is_admin">
                                     Painel de controle
                                 </NavLink>
 
@@ -69,7 +75,10 @@ const showingNavigationDropdown = ref(false);
 
                                     <template #content>
                                         <DropdownLink :href="route('profile.edit')"> Editar perfil </DropdownLink>
-                                        <DropdownLink :href="route('logout')" method="post" as="button">
+                                        <DropdownLink :href="route('register')" method="get" as="button">
+                                            Registrar novo úsuario
+                                        </DropdownLink>
+                                        <DropdownLink :href="route('logout')" method="post" as="button" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2">
                                             Sair
                                         </DropdownLink>
                                     </template>
@@ -121,7 +130,7 @@ const showingNavigationDropdown = ref(false);
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink :href="route('courses.index')" :active="route().current('courses.index')">
-                            Cadastro de Cursos
+                            Cursos
                         </ResponsiveNavLink>
                     </div>
 
