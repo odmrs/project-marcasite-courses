@@ -18,12 +18,8 @@ class CourseController extends Controller
     public function index(): Response
     {
         $courses = Course::with('user:id,name')->latest()->get();
-        $allcourses = Course::all();
-        Log::info($courses);
-        Log::info($allcourses);
         return Inertia::render('Courses/Index', [
             'courses' => $courses,
-            'allcourses' => $allcourses
         ]);
     }
 

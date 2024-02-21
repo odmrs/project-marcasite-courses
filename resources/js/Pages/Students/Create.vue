@@ -6,7 +6,8 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
 // import { useForm, usePage } from '@inertiajs/inertia-vue3';a
-import { ref } from 'vue';
+
+defineProps(['courses']);
 
 const form = useForm({
     name: '',
@@ -28,7 +29,6 @@ const submit = () => {
     });
 };
 
-const { allcourses } = usePage().props;
 </script>
 
 
@@ -41,14 +41,6 @@ const { allcourses } = usePage().props;
         </div>
         <form @submit.prevent="submit" enctype="multipart/form-data">
             <div>
-        <h1>Lista de Cursos</h1>
-        <ul>
-            <li v-for="course in allcourses" :key="course.id">
-                {{ course.name }}
-            </li>
-            <li>teste</li>
-            <li>tesss</li>
-        </ul>
     </div>
         <div>
             <InputLabel for="course_name" value="Nome do aluno" />
@@ -140,12 +132,12 @@ const { allcourses } = usePage().props;
         </div>  
 
         <div>
-        <label for="course_id">Curso:</label>
-        <select v-model="form.course_id" id="course" class="mt-1 block w-full">
-            <option value="">Selecione um curso</option>
-            <option v-for="course in courses" :key="course.id" :value="course_name">{{ course.name }}</option>
-        </select>
-    </div>
+            <label for="course_id">Curso:</label>
+            <select v-model="form.course_id" id="course" class="mt-1 block w-full">
+                <option value="">Selecione um curso</option>
+                <option v-for="course in courses" :key="course.id" :value="course.id">{{ course.course_name }}</option>
+            </select>
+         </div>
 
 
         <div class="flex items-center justify-end mt-4">
