@@ -16,6 +16,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+// Routes just for admin and auth users
 
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/dashboard', function () {
@@ -25,7 +26,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
         ->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
-    ;
+
+    Route::match(['get', 'post'], '/courses/create', [CourseController::class, 'newCourse'])->name('courses.create');
+
+    Route::resource('courses', CourseController::class)
+        ->only(['store', 'update', 'destroy'])
+        ->middleware(['auth', 'verified']);
 });
 
 Route::middleware('auth')->group(function () {
@@ -35,10 +41,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('courses', CourseController::class)
-    ->only(['index', 'store', 'update', 'destroy'])
+    ->only(['index'])
     ->middleware(['auth', 'verified']);
-
-Route::match(['get', 'post'], '/courses/create', [CourseController::class, 'newCourse'])->name('courses.create');
 
 // Download files
 Route::get('/downloads/{filename}', function ($filename) {
