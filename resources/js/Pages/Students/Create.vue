@@ -5,13 +5,13 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-// import { useForm, usePage } from '@inertiajs/inertia-vue3';a
 
 defineProps(['courses']);
 
 const form = useForm({
     name: '',
     course_id: '',
+    cpf:'',
     email: '',
     userType: '',
     address: '',
@@ -22,13 +22,17 @@ const form = useForm({
     remember: false
 });
 
+// const handleSubmit = () => {
+//     form.post(route('students.store'), {
+//         onFinish: () => form.reset(),
+//     });
+// };
 
 const submit = () => {
     form.post(route('students.store'), {
         onFinish: () => form.reset(),
     });
 };
-
 </script>
 
 
@@ -39,11 +43,10 @@ const submit = () => {
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
-        <form @submit.prevent="submit" enctype="multipart/form-data">
-            <div>
+        <form @submit.prevent="submit" enctype="multipart/form-data">            <div>
     </div>
         <div>
-            <InputLabel for="course_name" value="Nome do aluno" />
+            <InputLabel for="name" value="Nome do aluno" />
             <TextInput
                 id="name"
                 type="text"
@@ -66,14 +69,27 @@ const submit = () => {
                 />
                 <InputError class="mt-2" :message="form.errors.email" />
             </div>
-        <div>
+        
+            <div>
+                <InputLabel for="password" value="Senha para o aluno" />
+                <TextInput
+                    id="password"
+                    type="password"
+                    class="mt-1 block w-full"
+                    v-model="form.password"
+                    required
+                />
+                <InputError class="mt-2" :message="form.errors.password" />
+            </div>
+        
+            <div>
             <InputLabel for="cpf" value="CPF do aluno" />
             <TextInput
                 id="cpf"
-                type="number"
+                type="text"
                 class="mt-1 block w-full"
                 v-model="form.cpf"
-                min="99999999999"
+                placeholder="formato: 999.999.999-99"
                 required
             />
             <InputError class="mt-2" :message="form.errors.cpf" />
@@ -103,10 +119,10 @@ const submit = () => {
             <InputLabel for="phone" value="Telefone" />
             <TextInput
                 id="phone"
-                type="number"
+                type="text"
                 class="mt-1 block w-full"
                 v-model="form.phone"
-                min=99999999
+                placeholder="Formato:(99)9999-9999)"
             />
             <InputError class="mt-2" :message="form.errors.phone" />
         </div>
@@ -114,16 +130,16 @@ const submit = () => {
             <InputLabel for="cellphone" value="Celular" />
             <TextInput
                 id="cellphone"
-                type="number"
+                type="text"
                 class="mt-1 block w-full"
-                v-model="form.s"
-                min=99999999999
+                v-model="form.cellphone"
+                placeholder="Formato: (99)99999-9999"
             />
             <InputError class="mt-2" :message="form.errors.cellphone" />
         </div>
         <div>
             <label for="userType">Estudante | Associado | Profssional</label>
-            <select v-model="form.userType" id="userType" class="mt-1 block w-full">
+            <select v-model="form.userType" id="userType" class="mt-1 block w-full" required>
                 <option value="estudante">Estudante</option>
                 <option value="profissional">Profissional</option>
                 <option value="associado">Associado</option>
@@ -133,7 +149,7 @@ const submit = () => {
 
         <div>
             <label for="course_id">Curso:</label>
-            <select v-model="form.course_id" id="course" class="mt-1 block w-full">
+            <select v-model="form.course_id" id="course_id" class="mt-1 block w-full">
                 <option value="">Selecione um curso</option>
                 <option v-for="course in courses" :key="course.id" :value="course.id">{{ course.course_name }}</option>
             </select>
@@ -142,14 +158,14 @@ const submit = () => {
 
         <div class="flex items-center justify-end mt-4">
                 <Link
-                    :href="route('courses.index')"
+                    :href="route('students.index')"
                     class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                 >
                     Deseja voltar?
                 </Link>
 
                 <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Registrar curso
+                    Registrar alunos
                 </PrimaryButton>
             </div>
         </form>

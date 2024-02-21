@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->foreignId('course_id')->constrained('courses');
+            $table->string('userType');
             $table->string('email')->unique();
             $table->string('cpf')->unique();
             $table->string('address');

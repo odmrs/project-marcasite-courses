@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use App\Models\Course;
+use Illuminate\Http\RedirectResponse;
+
 
 class StudentController extends Controller
 {
@@ -38,10 +40,29 @@ class StudentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'course_id' => 'required|exists:courses,id',
+            'email' => 'required|email|unique:students,email',
+            'cpf' => 'required|cpf|unique:students,cpf',
+            'address' => 'required|string|max:255',
+            'company_name' => 'nullable|string|max:255',
+            'userType' => 'required|string|in:estudante,profissional,associado',
+            'phone' => 'telefone',
+            'cellphone' => [
+                'required',
+                'regex:/^\(\d{2}\)\s?\d{4,5}-\d{4}$/'
+            ],
+            'password' => 'required|string|min:6|max:255',
+        ]);
+
+        Student::create($validated);
+
+        return redirect(route('students.index'));
     }
+
 
     /**
      * Display the specified resource.

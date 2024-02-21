@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
+
 
 class CourseController extends Controller
 {
@@ -40,6 +40,7 @@ class CourseController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+
         $validated = $request->validate([
             'course_name' => 'required|string|max:255',
             'course_description' => 'required|string',
