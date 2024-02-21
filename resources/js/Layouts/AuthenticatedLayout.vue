@@ -20,22 +20,19 @@ const showingNavigationDropdown = ref(false);
                         <div class="flex">
                             <!-- Logo -->
                             <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')" v-if="$page.props.auth.user.is_admin">
+                                <Link :href="route('dashboard')">
                                     <ApplicationLogo
                                         class="block h-9 w-auto fill-current text-gray-800"
                                     />
-                                </Link>
-                                <Link :href="route('courses.index')" v-else>
-                                    <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800"
-                                    />
-                                </Link>
-                                
+                                </Link>                                
                             </div>
 
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" >
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')" v-if="$page.props.auth.user.is_admin">
+                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
+                                    Bem vindo
+                                </NavLink>
+                                <NavLink :href="route('students.index')" :active="route().current('students.index')" v-if="$page.props.auth.user.is_admin">
                                     Painel de controle
                                 </NavLink>
 
@@ -126,7 +123,11 @@ const showingNavigationDropdown = ref(false);
                 >
                     <div class="pt-2 pb-3 space-y-1">
                         <ResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                            Painel de controle
+                            Bem vindo
+                        </ResponsiveNavLink>
+
+                        <ResponsiveNavLink :href="route('students.index')" :active="route().current('students.index')">
+                            Painel de Controle
                         </ResponsiveNavLink>
 
                         <ResponsiveNavLink :href="route('courses.index')" :active="route().current('courses.index')">

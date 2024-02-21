@@ -50,7 +50,7 @@ defineProps({
         <div class="top-0 right-0 p-6 text-center">
             <Link
                 :href="route('login')"
-                class="font-semibold text-white bg-blue-500 hover:bg-blue-600 dark:bg-blue-700 dark:hover:bg-blue-800 px-4 py-2 rounded-md mb-4 sm:mb-0 sm:me-4 w-500 sm:w-auto focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-100"
+                class="font-semibold text-white bg-green-400 hover:bg-green-500 dark:bg-green-600 dark:hover:bg-green-700 px-4 py-2 rounded-md mb-4 sm:mb-0 sm:me-4 w-500 sm:w-auto focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2 focus:ring-offset-gray-100"
             >
                 Log in
             </Link>

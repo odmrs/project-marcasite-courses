@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StudentController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -17,20 +18,27 @@ Route::get('/', function () {
     ]);
 });
 // Routes just for admin and auth users
+// dashboard routes
+Route::get('/dashboard', function () {
+    return Inertia::render('Dashboard');
+})->name('dashboard');
+
 
 Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
 
     Route::post('register', [RegisteredUserController::class, 'store']);
 
-    Route::match(['get', 'post'], '/courses/create', [CourseController::class, 'newCourse'])->name('courses.create');
-
+    // Course's routes
     Route::resource('courses', CourseController::class)
         ->only(['store', 'update', 'destroy'])
+        ->middleware(['auth', 'verified']);
+    Route::match(['get', 'post'], '/courses/create', [CourseController::class, 'newCourse'])->name('courses.create');
+
+    // Student's routes
+    Route::resource('students', StudentController::class)
+        ->only(['index', 'store', 'update', 'destroy'])
         ->middleware(['auth', 'verified']);
 });
 
