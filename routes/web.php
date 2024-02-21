@@ -2,23 +2,25 @@
 
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
-use GuzzleHttp\Middleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
+        'canRegister' => Route::has('Register'),
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
 });
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return Inertia::render(
+        'Dashboard',
+        ['canRegister' => Route::has('Register')],
+    );
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
