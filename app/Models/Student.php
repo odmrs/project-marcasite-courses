@@ -14,6 +14,7 @@ class Student extends Model
         "course_id",
         "email",
         "cpf",
+        'userType',
         "address",
         "company_name",
         "phone",

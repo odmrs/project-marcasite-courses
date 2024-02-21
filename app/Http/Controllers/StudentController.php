@@ -6,6 +6,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Models\Course;
 
 class StudentController extends Controller
 {
@@ -19,6 +20,13 @@ class StudentController extends Controller
         ]);
     }
 
+    public function newStudent()
+    {
+        $courses = Course::all();
+        return Inertia::render('Students/Create', [
+            'courses' => $courses
+        ]);
+    }
     /**
      * Show the form for creating a new resource.
      */

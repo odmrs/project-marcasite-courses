@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Log;
 
 class CourseController extends Controller
 {
@@ -18,9 +18,12 @@ class CourseController extends Controller
     public function index(): Response
     {
         $courses = Course::with('user:id,name')->latest()->get();
-
+        $allcourses = Course::all();
+        Log::info($courses);
+        Log::info($allcourses);
         return Inertia::render('Courses/Index', [
             'courses' => $courses,
+            'allcourses' => $allcourses
         ]);
     }
 

@@ -16,10 +16,10 @@ return new class extends Migration {
             $table->foreignId('course_id')->constrained('courses');
             $table->string('email')->unique();
             $table->string('cpf')->unique();
-            $table->string('address')->nullable();
+            $table->string('address');
             $table->string('company_name')->nullable();
             $table->string('phone')->nullable();
-            $table->string('cellphone')->nullable();
+            $table->string('cellphone');
             $table->string('password');
             $table->timestamps();
         });
