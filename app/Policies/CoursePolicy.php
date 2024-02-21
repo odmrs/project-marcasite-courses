@@ -45,7 +45,7 @@ class CoursePolicy
      */
     public function delete(User $user, Course $course): bool
     {
-        //
+        return $this->update($user, $course);
     }
 
     /**

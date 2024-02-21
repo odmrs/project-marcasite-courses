@@ -48,7 +48,7 @@ class CourseController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'max_students' => 'required|integer|min:5',
-            'file_upload' => 'required|mimes:csv,txt,xlx,xls,pdf|max:2048'
+            'file_upload' => 'nullable|mimes:csv,txt,xlx,xls,pdf|max:2048'
         ]);
 
         if ($request->hasFile('file_upload')) {
@@ -95,20 +95,15 @@ class CourseController extends Controller
             'max_students' => 'required|integer|min:5',
         ];
 
-        // Adiciona a validação para o campo file_upload somente se um novo arquivo for enviado
         if ($request->hasFile('file_upload')) {
             $validationRules['file_upload'] = 'nullable|mimes:csv,txt,xlx,xls,pdf|max:2048';
         }
 
-        // Valida os dados do formulário
         $validated = $request->validate($validationRules);
 
-        // Se um novo arquivo foi enviado, realiza o processo de upload e atualiza o nome do arquivo no banco de dados
-        if ($request->hasFile('file_upload')) {
-            // Remove o arquivo anterior
-            Storage::delete('uploads/' . $course->file_upload);
 
-            // Salva o novo arquivo
+        if ($request->hasFile('file_upload')) {
+            Storage::delete('uploads/' . $course->file_upload);
             $filename = uniqid() . '.' . $request->file('file_upload')->getClientOriginalExtension();
             $file_upload = $request->file('file_upload')->storeAs('uploads', $filename);
             $validated['file_upload'] = $filename;
@@ -125,8 +120,10 @@ class CourseController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Course $course)
+    public function destroy(Course $course): RedirectResponse
     {
-        //
+        $this->authorize('delete', $course);
+        $course->delete();
+        return redirect(route('courses.index'));
     }
 }

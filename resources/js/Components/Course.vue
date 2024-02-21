@@ -1,6 +1,6 @@
 <script setup>
 import Dropdown from '@/Components/Dropdown.vue';
-
+import DropdownLink from '@/Components/DropdownLink.vue';
 import InputError from '@/Components/InputError.vue';
 
 import PrimaryButton from '@/Components/PrimaryButton.vue';
@@ -50,8 +50,12 @@ const editing = ref(false);
                   </template>
                   <template #content>
                       <button class="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out" @click="editing = true">
-                          Edit
+                          Editar
                       </button>
+                      <DropdownLink as="button" :href="route('courses.destroy', course.id)" method="delete"
+                      class="text-red-600 hover:bg-red-100 hover:text-red-900">
+                      Deletar
+                      </DropdownLink>
                   </template>
                 </Dropdown>
               </div>
