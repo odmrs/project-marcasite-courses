@@ -40,7 +40,7 @@ const showingNavigationDropdown = ref(false);
                                 </NavLink>
 
                                 <NavLink :href="route('courses.index')" :active="route().current('courses.index')">
-                                    Cadastro de Cursos
+                                    Cursos
                                 </NavLink>
                             </div>
                         </div>
@@ -75,7 +75,7 @@ const showingNavigationDropdown = ref(false);
 
                                     <template #content>
                                         <DropdownLink :href="route('profile.edit')"> Editar perfil </DropdownLink>
-                                        <DropdownLink :href="route('register')" method="get" as="button">
+                                        <DropdownLink :href="route('register')" method="get" as="button" v-if="$page.props.auth.user.is_admin">
                                             Registrar novo úsuario
                                         </DropdownLink>
                                         <DropdownLink :href="route('logout')" method="post" as="button" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2">
