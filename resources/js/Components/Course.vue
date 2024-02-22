@@ -147,7 +147,7 @@ const editing = ref(false);
             <tr> 
               <td class="px-4 py-2">{{ course.course_name }}</td>
               <td class="px-4 py-2">{{ course.course_description }}</td>
-              <td class="px-4 py-2">{{ course.course_price }}</td>
+              <td class="px-4 py-2">R$:{{ course.course_price }}</td>
               <td class="px-4 py-2">{{ course.start_date }}</td>
               <td class="px-4 py-2">{{ course.end_date }}</td>
               <td class="px-4 py-2">{{ course.max_students }}</td>
