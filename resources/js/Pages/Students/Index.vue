@@ -1,7 +1,7 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, InertiaLink, useForm } from '@inertiajs/inertia-vue3';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import GuestLayout from '@/Layouts/GuestLayout_without_logo.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
@@ -25,11 +25,34 @@ const form = useForm({
     cellphone: props.students.cellphone,
     remember: false
 });
+// Searching by name
+const searchQuery = ref('');
+//Searching by category
+const selectedCategory = ref('');
 
+const filteredStudents = computed(() => {
+    let filtered = props.students;
+
+    // Filtrar por nome do aluno
+    if (searchQuery.value.trim() !== '') {
+        filtered = filtered.filter(student => student.name.toLowerCase().includes(searchQuery.value.trim().toLowerCase()));
+    }
+
+    // Filtrar por categoria (userType)
+    if (selectedCategory.value !== '') {
+        filtered = filtered.filter(student => student.userType === selectedCategory.value);
+    }
+
+    return filtered;
+});
+
+
+// Getting  the action of editing click in student especify
 const editing = ref(false);
-
+// get id of student to put in route student.update
 let atual_student_id;
 
+// Filter by price of course's student
 const getCourseById = (id) => {
     const current_course = props.courses.find(course => course.id === id);
     return current_course.course_price;
@@ -167,18 +190,20 @@ const getCourseById = (id) => {
             </form>
       </div>
   <div class="container mx-auto p-6 flex flex-col items-center">
-    <!-- Campo de busca e filtro de categorias -->
     <div class="mb-4 flex justify-between w-full max-w-4xl">
-      <input type="text" placeholder="Buscar" class="w-1/2 px-3 py-2 border rounded-md">
-      <select class="w-1/4 px-3 py-2 border rounded-md">
-        <option value="">Todas as categorias</option>
-        <!-- Opções de categorias aqui -->
-      </select>
+      <input type="text" v-model="searchQuery" placeholder="Buscar" class="w-1/2 px-3 py-2 border rounded-md">
+<select v-model="selectedCategory" class="w-1/4 px-3 py-2 border rounded-md">
+    <option value="">Todas as categorias</option>
+    <option value="estudante">Estudante</option>
+    <option value="profissional">Profissional</option>
+    <option value="associado">Associado</option>
+</select>
     </div>
     <!-- Tabela -->
     <div class="w-full max-w-full overflow-x-auto">
       <table class="min-w-full">
         <thead class="bg-gray-50">
+          <tr v-for="student in filteredStudents" :key="student.id"></tr>
           <tr>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Inscrito</th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data de inscrição</th>
@@ -192,7 +217,7 @@ const getCourseById = (id) => {
           </tr>
         </thead>
         <tbody class="bg-white divide-y divide-gray-200">
-          <tr v-for="student in students" :key="student.id">
+          <tr v-for="student in filteredStudents" :key="student.id">
             <td class="px-6 py-4 whitespace-nowrap">{{ student.name }}</td>
             <td class="px-6 py-4 whitespace-nowrap">{{ student.created_at ? new Date(student.created_at).toLocaleDateString('pt-BR') : '' }}</td>
             <td class="px-6 py-4 whitespace-nowrap">{{ student.userType }}</td>
