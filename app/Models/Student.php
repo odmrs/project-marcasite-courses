@@ -19,7 +19,8 @@ class Student extends Model
         "company_name",
         "phone",
         "cellphone",
-        "password"
+        "password",
+        'status',
     ];
     // Relation with Course database
     public function course()
