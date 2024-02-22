@@ -32,7 +32,7 @@ const editing = ref(false);
  
 <template>
   <div class="container mx-auto p-6 flex flex-col items-center">
-    <div class="w-full max-w-4xl">
+    <div class="w-full max-w-full">
       <div class="flex justify-between items-center mb-6">
         <div>
           <span class="text-gray-800">{{ course.user.name }}</span>
