@@ -51,6 +51,7 @@ class CourseController extends Controller
             'file_upload' => 'nullable|mimes:csv,txt,xlx,xls,pdf|max:2048'
         ]);
 
+        // Store a file into -> storage/uploads/
         if ($request->hasFile('file_upload')) {
             $filename = uniqid() . '.' . $request->file('file_upload')->getClientOriginalExtension();
             $file_upload = $request->file('file_upload')->storeAs('uploads', $filename);
@@ -95,6 +96,7 @@ class CourseController extends Controller
             'max_students' => 'required|integer|min:5',
         ];
 
+        // I create this to fix bug of file, don't upgrade the tabe
         if ($request->hasFile('file_upload')) {
             $validationRules['file_upload'] = 'nullable|mimes:csv,txt,xlx,xls,pdf|max:2048';
         }

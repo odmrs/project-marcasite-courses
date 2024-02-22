@@ -19,6 +19,7 @@ class StudentController extends Controller
     {
         $students = Student::all();
         $courses = Course::all();
+
         return Inertia::render('Students/Index', [
             'students' => $students,
             'courses' => $courses
@@ -28,6 +29,7 @@ class StudentController extends Controller
     public function newStudent()
     {
         $courses = Course::all();
+
         return Inertia::render('Students/Create', [
             'courses' => $courses
         ]);

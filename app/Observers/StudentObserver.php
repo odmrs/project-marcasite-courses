@@ -13,6 +13,7 @@ class StudentObserver
      */
     public function created(Student $student): void
     {
+        // Create a new user when a student is create
         User::create([
             'name' => $student->name,
             'email' => $student->email,

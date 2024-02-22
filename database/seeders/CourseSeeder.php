@@ -12,7 +12,7 @@ class CourseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Usuário root
+        // Default courses 
         Course::create([
             'user_id' => 1,
             'course_name' => 'Curso de php',

@@ -30,20 +30,16 @@ class Student extends Model
     protected static function booted()
     {
         static::created(function ($student) {
-            // Obtenha o curso associado ao aluno
             $course = $student->course;
 
-            // Decrementa o número de vagas disponíveis no curso
             if ($course) {
                 $course->decrement('max_students');
             }
         });
 
         static::deleted(function ($student) {
-            // Obtenha o curso associado ao aluno
             $course = $student->course;
 
-            // Incrementa o número de vagas disponíveis no curso
             if ($course) {
                 $course->increment('max_students');
             }

@@ -37,6 +37,7 @@ class CoursePolicy
      */
     public function update(User $user, Course $course): bool
     {
+        // Just admin can change this
         return $user->is_admin === 1;
     }
 

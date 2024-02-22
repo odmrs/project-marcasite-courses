@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // Usuário root
+        // Root User
         User::create([
             'name' => 'root@root',
             'email' => 'root@root',
@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'is_admin' => true,
         ]);
 
-        // Usuário normal
+        // Normal User
         User::create([
             'name' => 'user@user',
             'email' => 'user@user',

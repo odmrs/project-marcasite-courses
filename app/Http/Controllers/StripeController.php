@@ -43,6 +43,7 @@ class StripeController extends Controller
         return redirect()->route('stripe.success');
     }
 
+    // Screen of success transition and Cancel
     public function success()
     {
         return Inertia::render('Stripe/Success');
