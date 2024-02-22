@@ -21,4 +21,22 @@ class Student extends Model
         "cellphone",
         "password"
     ];
+    // Relation with Course database
+    public function course()
+    {
+        return $this->belongsTo(Course::class);
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($student) {
+            // Obtenha o curso associado ao aluno
+            $course = $student->course;
+
+            // Decrementa o número de vagas disponíveis no curso
+            if ($course) {
+                $course->decrement('max_students');
+            }
+        });
+    }
 }
