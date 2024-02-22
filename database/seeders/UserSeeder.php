@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class UserSeeder extends Seeder
 {
@@ -13,24 +13,20 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // Criação do usuário administrador
-        DB::table('users')->insert([
+        // Usuário root
+        User::create([
             'name' => 'root@root',
             'email' => 'root@root',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('root@root'),
             'is_admin' => true,
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
 
-        // Criação do usuário comum
-        DB::table('users')->insert([
+        // Usuário normal
+        User::create([
             'name' => 'user@user',
             'email' => 'user@user',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('user@user'),
             'is_admin' => false,
-            'created_at' => now(),
-            'updated_at' => now(),
         ]);
     }
 }
