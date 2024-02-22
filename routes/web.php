@@ -18,13 +18,14 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-// Routes just for admin and auth users
+
 // dashboard routes
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
 
+// Routes just for admin and auth users
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
@@ -35,12 +36,14 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::resource('courses', CourseController::class)
         ->only(['store', 'update', 'destroy'])
         ->middleware(['auth', 'verified']);
+
     Route::match(['get', 'post'], '/courses/create', [CourseController::class, 'newCourse'])->name('courses.create');
 
     // Student's routes
     Route::resource('students', StudentController::class)
         ->only(['index', 'store', 'update', 'destroy'])
         ->middleware(['auth', 'verified']);
+
     Route::match(['get', 'post'], '/students/create', [StudentController::class, 'newStudent'])->name('students.create');
 
     Route::get('students/download', function () {
@@ -56,29 +59,25 @@ Route::resource('courses', CourseController::class)
 // Download files
 Route::get('/downloads/{filename}', function ($filename) {
     $path = storage_path('app/uploads/' . $filename);
-
     if (!file_exists($path)) {
         abort(404);
     }
     return response()->download($path);
 })->where('filename', '.*');
 
-// Stripe Routes
-
-Route::get('stripe', [StripeController::class, 'index'])->name('Index');
-Route::get('stripe/success', [StripeController::class, 'success'])->name('stripe.success');
-Route::get('stripe/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
-Route::post('stripe/checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
-
-
-
-// Export PDF | XLR
-
-
-
 Route::middleware('auth')->group(function () {
+    // Stripe Routes
+    Route::get('stripe', [StripeController::class, 'index'])->name('Index');
+    Route::get('stripe/success', [StripeController::class, 'success'])->name('stripe.success');
+    Route::get('stripe/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
+
+    Route::post('stripe/checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
+
+    // Chech auth edit profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

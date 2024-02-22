@@ -11,7 +11,7 @@ import { Head } from '@inertiajs/vue3';
       </template>
       <div class="max-w-6xl mx-auto p-8 sm:p-10 lg:p-8">   
         <div class="flex justify-center w-full">
-            oi
+            #TODO
           </div>
       </div>
     </AuthenticatedLayout>
