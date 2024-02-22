@@ -17,8 +17,9 @@ class StudentController extends Controller
      */
     public function index(): Response
     {
+        $students = Student::all();
         return Inertia::render('Students/Index', [
-            // resources/js/Pages/Students/Index.vue
+            // 'students' => $students
         ]);
     }
 

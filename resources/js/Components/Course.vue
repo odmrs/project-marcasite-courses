@@ -145,13 +145,13 @@ const editing = ref(false);
           </thead>
           <tbody>
             <tr> 
-              <td class="px-4 py-2">{{ course.course_name }}</td>
-              <td class="px-4 py-2">{{ course.course_description }}</td>
-              <td class="px-4 py-2">R$:{{ course.course_price }}</td>
-              <td class="px-4 py-2">{{ course.start_date }}</td>
-              <td class="px-4 py-2">{{ course.end_date }}</td>
-              <td class="px-4 py-2">{{ course.max_students }}</td>
-              <td class="px-4 py-2">
+              <td class="px-4 py-2  whitespace-nowrap">{{ course.course_name }}</td>
+              <td class="px-4 py-2  whitespace-nowrap">{{ course.course_description }}</td>
+              <td class="px-4 py-2  whitespace-nowrap">R$:{{ course.course_price }}</td>
+              <td class="px-6 py-4 whitespace-nowrap">{{ course.start_date ? new Date(course.start_date).toLocaleDateString('pt-BR') : '' }}</td>              
+              <td class="px-6 py-4 whitespace-nowrap">{{ course.end_date ? new Date(course.end_date).toLocaleDateString('pt-BR') : '' }}</td>
+              <td class="px-4 py-2  whitespace-nowrap">{{ course.max_students }}</td>
+              <td class="px-4 py-2  whitespace-nowrap">
                   <template v-if="course.file_upload">
                       <a :href="'/downloads/' + course.file_upload" download class="text-blue-500 hover:underline">Baixar</a>
                   </template>
