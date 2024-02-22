@@ -86,14 +86,17 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        return Inertia::render('Students/Edit', [
+            //
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function destroy(Student $student): RedirectResponse
     {
-        //
+        $student->delete();
+        return redirect(route('students.index'));
     }
 }
