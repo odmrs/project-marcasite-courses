@@ -8,7 +8,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\RegisteredUserController;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -42,6 +42,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
         ->only(['index', 'store', 'update', 'destroy'])
         ->middleware(['auth', 'verified']);
     Route::match(['get', 'post'], '/students/create', [StudentController::class, 'newStudent'])->name('students.create');
+
+    Route::get('students/download', function () {
+        $pdf = Pdf::loadview('');
+        return $pdf->download('students.pdf');
+    });
 });
 
 Route::resource('courses', CourseController::class)
@@ -64,6 +69,11 @@ Route::get('stripe', [StripeController::class, 'index'])->name('Index');
 Route::get('stripe/success', [StripeController::class, 'success'])->name('stripe.success');
 Route::get('stripe/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
 Route::post('stripe/checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
+
+
+
+// Export PDF | XLR
+
 
 
 Route::middleware('auth')->group(function () {

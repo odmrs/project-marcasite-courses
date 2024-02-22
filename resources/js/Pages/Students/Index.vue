@@ -8,9 +8,24 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import {  Link,  usePage } from '@inertiajs/vue3';
+import html2pdf from 'html2pdf.js';
 
+import { defineProps } from 'vue';
 
 const props = defineProps(['students', 'courses']);
+
+const downloadPDF = () => {
+    const element = document.getElementById('to_pdf');
+    const opt = {
+        margin:       0,
+        filename:     'lista-de-estudates.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+    };
+    html2pdf().from(element).set(opt).save();
+};
+
 
 const form = useForm({
     name: props.students.name,
@@ -45,7 +60,6 @@ const filteredStudents = computed(() => {
 
     return filtered;
 });
-
 
 // Getting  the action of editing click in student especify
 const editing = ref(false);
@@ -200,8 +214,13 @@ const getCourseById = (id) => {
 </select>
     </div>
     <!-- Tabela -->
+    
     <div class="w-full max-w-full overflow-x-auto">
-      <table class="min-w-full">
+      <div class="flex justify-between mb-4">
+      <button class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600" @click="downloadPDF()">Baixar pdf</button>
+      <button class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600" @click="exportToExcel()">Exportar para XLR</button>
+    </div>
+      <table class="min-w-full" id="to_pdf">
         <thead class="bg-gray-50">
           <tr v-for="student in filteredStudents" :key="student.id"></tr>
           <tr>
@@ -238,3 +257,47 @@ const getCourseById = (id) => {
   </div>
 </AuthenticatedLayout>
 </template>
+
+<script>
+import * as XLSX from 'xlsx';
+
+export default {
+  methods: {
+    getCourseById(id) {
+      const current_course = this.courses.find(course => course.id === id);
+      return current_course ? current_course.course_price : '';
+    },
+    formatDate(dateString) {
+      if (!dateString) return ''; // Retorna uma string vazia se a data for nula ou indefinida
+      const date = new Date(dateString);
+      const options = { day: '2-digit', month: '2-digit', year: '2-digit' };
+      return date.toLocaleDateString('pt-BR', options);
+    },
+    exportToExcel() {
+      const customizedStudents = this.students.map(student => ({
+        Nome: student.name,
+        Email: student.email,
+        Criado_no_dia: this.formatDate(student.created_at),
+        Tipo_Usuario: student.userType,
+        Cpf: student.cpf,
+        Endereco: student.address,
+        Status: student.status,
+        Preco_do_Curso: this.getCourseById(student.course_id),
+      }));
+
+      // Crie uma nova planilha
+      const ws = XLSX.utils.json_to_sheet(customizedStudents);
+
+      // Crie um novo arquivo de workbook
+      const wb = XLSX.utils.book_new();
+
+      // Adicione a planilha ao workbook
+      XLSX.utils.book_append_sheet(wb, ws, 'Index');
+
+      // Salve o arquivo
+      XLSX.writeFile(wb, 'lista-de-alunos.xlsx');
+    }
+  },
+  props: ['students', 'courses']
+}
+</script>
