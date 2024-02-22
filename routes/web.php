@@ -25,7 +25,7 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
 
-// Routes just for admin and auth users
+// Routes just for admin
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');

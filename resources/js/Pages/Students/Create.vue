@@ -22,12 +22,7 @@ const form = useForm({
     remember: false
 });
 
-// const handleSubmit = () => {
-//     form.post(route('students.store'), {
-//         onFinish: () => form.reset(),
-//     });
-// };
-
+// Send form to students.store
 const submit = () => {
     form.post(route('students.store'), {
         onFinish: () => form.reset(),
@@ -43,7 +38,7 @@ const submit = () => {
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
-        <form @submit.prevent="submit" enctype="multipart/form-data">
+    <form @submit.prevent="submit" enctype="multipart/form-data">
 <div>
     </div>
         <div>
@@ -58,32 +53,32 @@ const submit = () => {
             <InputError class="mt-2" :message="form.errors.name" />
         </div>
         <div>
-                <InputLabel for="email" value="E-mail do aluno" />
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
+            <InputLabel for="email" value="E-mail do aluno" />
+            <TextInput
+                id="email"
+                type="email"
+                class="mt-1 block w-full"
+                v-model="form.email"
+                required
+                autofocus
+                autocomplete="username"
+            />
+            <InputError class="mt-2" :message="form.errors.email" />
+        </div>
         
-            <div>
-                <InputLabel for="password" value="Senha para o aluno" />
-                <TextInput
-                    id="password"
-                    type="password"
-                    class="mt-1 block w-full"
-                    v-model="form.password"
-                    required
-                />
-                <InputError class="mt-2" :message="form.errors.password" />
-            </div>
+        <div>
+            <InputLabel for="password" value="Senha para o aluno" />
+            <TextInput
+                id="password"
+                type="password"
+                class="mt-1 block w-full"
+                v-model="form.password"
+                required
+            />
+            <InputError class="mt-2" :message="form.errors.password" />
+        </div>
         
-            <div>
+        <div>
             <InputLabel for="cpf" value="CPF do aluno" />
             <TextInput
                 id="cpf"
@@ -95,6 +90,7 @@ const submit = () => {
             />
             <InputError class="mt-2" :message="form.errors.cpf" />
         </div>
+
         <div>
             <InputLabel for="address" value="Endereço" />
             <TextInput
@@ -106,6 +102,7 @@ const submit = () => {
             />
             <InputError class="mt-2" :message="form.errors.address" />
         </div>
+
         <div>
             <InputLabel for="company_name" value="Empresa" />
             <TextInput
@@ -116,6 +113,7 @@ const submit = () => {
             />
             <InputError class="mt-2" :message="form.errors.company_name" />
         </div>
+
         <div>
             <InputLabel for="phone" value="Telefone" />
             <TextInput
@@ -127,6 +125,7 @@ const submit = () => {
             />
             <InputError class="mt-2" :message="form.errors.phone" />
         </div>
+
         <div>
             <InputLabel for="cellphone" value="Celular" />
             <TextInput
@@ -138,6 +137,7 @@ const submit = () => {
             />
             <InputError class="mt-2" :message="form.errors.cellphone" />
         </div>
+
         <div>
             <label for="userType">Estudante | Associado | Profssional</label>
             <select v-model="form.userType" id="userType" class="mt-1 block w-full" required>
@@ -156,7 +156,6 @@ const submit = () => {
             </select>
          </div>
 
-
         <div class="flex items-center justify-end mt-4">
                 <Link
                     :href="route('students.index')"
@@ -170,5 +169,6 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
+        <!-- end form  -->
     </GuestLayout>
 </template>

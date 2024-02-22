@@ -28,7 +28,7 @@ defineProps({
             <img src="/storage/images/center-image.png" alt="Marcasite Logo criada por Marcos" style="max-width: 35%; height: auto;">
         </div>
         <template v-if="$page.props.auth.user">
-        <!-- Botões de login/registrar -->
+        <!-- Default buttons -->
             <div class="top-0 right-0 p-6 text-center">
                 <Link
             v-if="$page.props.auth.user && $page.props.auth.user.is_admin"
@@ -58,7 +58,7 @@ defineProps({
     </template>
         </div>
 
-        <!-- Créditos -->
+        <!-- Credits -->
         <div class="bottom-0 left-0 right-0 p-6 text-center">
             <div class="text-sm text-gray-500 dark:text-gray-400 font-semibold">
                 <a href="https://github.com/odmrs" target="_blank">Criado por: Marcos Vinícius (odmrs)</a>
