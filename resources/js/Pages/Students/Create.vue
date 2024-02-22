@@ -43,7 +43,8 @@ const submit = () => {
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
-        <form @submit.prevent="submit" enctype="multipart/form-data">            <div>
+        <form @submit.prevent="submit" enctype="multipart/form-data">
+<div>
     </div>
         <div>
             <InputLabel for="name" value="Nome do aluno" />

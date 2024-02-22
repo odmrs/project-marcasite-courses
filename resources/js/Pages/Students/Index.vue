@@ -2,22 +2,39 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, InertiaLink, useForm } from '@inertiajs/inertia-vue3';
 import { ref } from 'vue';
+import GuestLayout from '@/Layouts/GuestLayout_without_logo.vue';
+import InputError from '@/Components/InputError.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import PrimaryButton from '@/Components/PrimaryButton.vue';
+import TextInput from '@/Components/TextInput.vue';
+import {  Link,  usePage } from '@inertiajs/vue3';
 
-const props = defineProps(['students']);
+
+const props = defineProps(['students', 'courses']);
 
 const form = useForm({
-    // course_name: props.course.course_name,
-    // course_description: props.course.course_description,
-    // course_price: props.course.course_price,
-    // start_date: props.course.start_date,
-    // end_date: props.course.end_date,
-    // max_students: props.course.max_students,
-    // file_upload: props.course.file_upload,
-    // remember: false
+    name: props.students.name,
+    course_id: props.students.course_id,
+    cpf: props.students.cpf,
+    email: props.students.email,
+    userType: props.students.userType,
+    address: props.students.address,
+    company_name: props.students.company_name,
+    phone: props.students.phone,
+    password: props.students.password,
+    cellphone: props.students.cellphone,
+    remember: false
 });
 
 const editing = ref(false);
-const deleting = ref(false);
+
+let atual_student_id;
+
+const getCourseById = (id) => {
+    const current_course = props.courses.find(course => course.id === id);
+    return current_course.course_price;
+};
+
 </script>
 
 <template>
@@ -27,74 +44,126 @@ const deleting = ref(false);
         <div class="flex justify-center w-full" v-if="$page.props.auth.user.is_admin">
           <InertiaLink :href="route('students.create')" class="inline-block px-60 py-5 bg-blue-500 text-black font-semibold rounded-md transition duration-300 ease-in-out hover:bg-blue-200 hover:text-black text-black underline">Criar novo estudante</InertiaLink>
         </div>
-        <form v-if="editing" @submit.prevent="form.put(route('students.update', { student: students.id }), { onSuccess: () => editing = false })" enctype="multipart/form-data">
-                <!-- course name  -->
-                <div class="mt-4">
-                  <label for="course_name" class="block text-sm font-medium text-gray-700">Course Name</label>
-                  <input v-model="form.course_name" type="text" id="course_name" name="course_name" class="mt-1 p-2 block w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                  <InputError :course_name="form.errors.course_name" class="mt-2" />
-                </div>
-                <!-- course description  -->
-                <div class="mt-4">
-                  <label for="course_description" class="block text-sm font-medium text-gray-700">Course Description</label>
-                  <textarea v-model="form.course_description" id="course_description" name="course_description" rows="4" class="mt-1 p-2 block w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"></textarea>
-                  <InputError :course_description="form.errors.course_description" class="mt-2" />
-                </div>
-                <!-- course price  -->
-                <div class="mt-4">
-                  <label for="course_price" class="block text-sm font-medium text-gray-700">Course Price</label>
-                  <input v-model="form.course_price" type="number" id="course_price" name="course_price" class="mt-1 p-2 block w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm">
-                  <InputError :course_price="form.errors.course_price" class="mt-2" />
-                </div>
-                <!-- start date  -->
-                <div class="mt-4">
-                  <label for="start_date" class="block text-sm font-medium text-gray-700">Start Date</label>
-                  <input 
-                    v-model="form.start_date" 
-                    type="date" 
-                    id="start_date" 
-                    name="start_date" 
-                    class="mt-1 p-2 block w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                    @change="updateEndDateMin"
-                  >
-                  <InputError :start_date="form.errors.start_date" class="mt-2" />
-                </div>
-                <!-- end date  -->
-                <div class="mt-4">
-                  <label for="end_date" class="block text-sm font-medium text-gray-700">End Date</label>
-                  <input 
-                    v-model="form.end_date" 
-                    type="date" 
-                    id="end_date" 
-                    name="end_date" 
-                    class="mt-1 p-2 block w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                    :min="form.start_date"
-                  >
-                  <InputError :end_date="form.errors.end_date" class="mt-2" />
-                </div>
-                <!-- max students  -->
-                <div class="mt-4">
-                  <label for="max_students" class="block text-sm font-medium text-gray-700">Max Students</label>
-                  <input v-model="form.max_students" type="number" id="max_students" name="max_students" class="mt-1 p-2 block w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" min="5">
-                  <InputError :max_students="form.errors.max_students" class="mt-2" />
-                </div>
-                <!-- add file  -->
-                <div class="mt-4">
-                    <label for="file_upload" class="block text-sm font-medium text-gray-700">Upload de arquivo</label>
-                    <input 
-                        type="file" 
-                        id="file_upload" 
-                        name="file_upload" 
-                        class="mt-1 p-2 block w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
-                        accept=".pdf,.doc,.docx"
-                        @change="handleFileUpload"
-                    >
-                    <InputError :file_upload="form.errors.file_upload" class="mt-2" />
-                </div>
+        
+        <form v-if="editing" @submit.prevent="form.put(route('students.update', atual_student_id), { onSuccess: () => editing = false })">
+          <GuestLayout>
+          <form @submit.prevent="submit" enctype="multipart/form-data">
+          <div>
+            <InputLabel for="name" value="Nome do aluno" />
+            <TextInput
+                id="name"
+                type="text"
+                class="mt-1 block w-full"
+                v-model="form.name"
+                required
+            />
+            <InputError class="mt-2" :message="form.errors.name" />
+        </div>
+        <div>
+                <InputLabel for="email" value="E-mail do aluno" />
+                <TextInput
+                    id="email"
+                    type="email"
+                    class="mt-1 block w-full"
+                    v-model="form.email"
+                    required
+                    autofocus
+                    autocomplete="username"
+                />
+                <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+        
+            <div>
+                <InputLabel for="password" value="Senha para o aluno" />
+                <TextInput
+                    id="password"
+                    type="password"
+                    class="mt-1 block w-full"
+                    v-model="form.password"
+                    required
+                />
+                <InputError class="mt-2" :message="form.errors.password" />
+            </div>
+        
+            <div>
+            <InputLabel for="cpf" value="CPF do aluno" />
+            <TextInput
+                id="cpf"
+                type="text"
+                class="mt-1 block w-full"
+                v-model="form.cpf"
+                placeholder="formato: 999.999.999-99"
+                required
+            />
+            <InputError class="mt-2" :message="form.errors.cpf" />
+        </div>
+        <div>
+            <InputLabel for="address" value="Endereço" />
+            <TextInput
+                id="address"
+                type="text"
+                class="mt-1 block w-full"
+                v-model="form.address"
+                required
+            />
+            <InputError class="mt-2" :message="form.errors.address" />
+        </div>
+        <div>
+            <InputLabel for="company_name" value="Empresa" />
+            <TextInput
+                id="company_name"
+                type="text"
+                class="mt-1 block w-full"
+                v-model="form.company_name"
+            />
+            <InputError class="mt-2" :message="form.errors.company_name" />
+        </div>
+        <div>
+            <InputLabel for="phone" value="Telefone" />
+            <TextInput
+                id="phone"
+                type="text"
+                class="mt-1 block w-full"
+                v-model="form.phone"
+                placeholder="Formato:(99)9999-9999)"
+            />
+            <InputError class="mt-2" :message="form.errors.phone" />
+        </div>
+        <div>
+            <InputLabel for="cellphone" value="Celular" />
+            <TextInput
+                id="cellphone"
+                type="text"
+                class="mt-1 block w-full"
+                v-model="form.cellphone"
+                placeholder="Formato: (99)99999-9999"
+            />
+            <InputError class="mt-2" :message="form.errors.cellphone" />
+        </div>
+        <div>
+            <label for="userType">Estudante | Associado | Profssional</label>
+            <select v-model="form.userType" id="userType" class="mt-1 block w-full" required>
+                <option value="estudante">Estudante</option>
+                <option value="profissional">Profissional</option>
+                <option value="associado">Associado</option>
+            </select>
+            <InputError class="mt-2" :message="form.errors.userType" />
+        </div>  
+
+        <div>
+            <label for="course_id">Curso:</label>
+            <select v-model="form.course_id" id="course_id" class="mt-1 block w-full">
+                <option value="">Selecione um curso</option>
+                <option v-for="course in courses" :key="course.id" :value="course.id">{{ course.course_name }}</option>
+            </select>
+         </div>
+
+        </form>
                 <div class="space-x-2 mt-4">
                   <PrimaryButton>Salvar</PrimaryButton>
                   <button @click="editing = false; form.reset(); form.clearErrors()">Cancelar</button>
                 </div>
+              </GuestLayout>
             </form>
       </div>
   <div class="container mx-auto p-6 flex flex-col items-center">
@@ -118,6 +187,7 @@ const deleting = ref(false);
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Address</th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">valor</th>
             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ações</th>
           </tr>
         </thead>
@@ -130,8 +200,9 @@ const deleting = ref(false);
             <td class="px-6 py-4 whitespace-nowrap">{{ student.email }}</td>
             <td class="px-6 py-4 whitespace-nowrap">{{ student.address }}</td>
             <td class="px-6 py-4 whitespace-nowrap">{{ student.status }}</td>
+            <td class="px-6 py-4 whitespace-nowrap">R$:{{ getCourseById(student.course_id) }}</td>
             <td class="px-6 py-4 whitespace-nowrap">
-              <button class="text-indigo-600 hover:text-indigo-900" @click="editing = true">Editar</button>
+              <button class="text-indigo-600 hover:text-indigo-900" @click="editing = true; atual_student_id = student.id">Editar</button>
               /
               <button class="text-red-600 hover:text-red-900 text-red-600 hover:bg-red-100 hover:text-red-900" @click.prevent="$inertia.delete(route('students.destroy', { student: student.id }))">Excluir</button>
             </td>

@@ -18,8 +18,10 @@ class StudentController extends Controller
     public function index(): Response
     {
         $students = Student::all();
+        $courses = Course::all();
         return Inertia::render('Students/Index', [
-            'students' => $students
+            'students' => $students,
+            'courses' => $courses
         ]);
     }
 
@@ -86,9 +88,22 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        return Inertia::render('Students/Edit', [
-            //
+        $validated = $request->validate([
+            'name' => 'string|max:255',
+            'course_id' => 'exists:courses,id',
+            'email' => 'email|unique:students,email',
+            'cpf' => 'cpf|unique:students,cpf',
+            'address' => 'string|max:255',
+            'company_name' => 'nullable|string|max:255',
+            'userType' => 'string|in:estudante,profissional,associado',
+            'phone' => 'telefone',
+            'cellphone' => [
+                'regex:/^\(\d{2}\)\s?\d{4,5}-\d{4}$/'
+            ],
+            'password' => 'string|min:6|max:255',
         ]);
+
+        $student->update($validated);
     }
 
     /**
