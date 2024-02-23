@@ -15,7 +15,7 @@
           <p class="text-gray-600 my-2">Obrigado por comprar nossos cursos!</p>
           <p class="text-gray-600">Tenha um ótimo dia!</p>
           <div class="py-10 text-center">
-            <InertiaLink :href="route('stripe.index')" class="px-12 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-full">
+            <InertiaLink :href="route('Index')" class="px-12 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-full">
                 Voltar
             </InertiaLink>
           </div>
