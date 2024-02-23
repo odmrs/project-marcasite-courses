@@ -11,9 +11,9 @@
           <path fill="currentColor" d="M34.121,34.121a1,1,0,0,1-1.414,0L24,25.414l-8.707,8.707a1,1,0,1,1-1.414-1.414L22.586,24,13.879,15.293a1,1,0,0,1,1.414-1.414L24,22.586l8.707-8.707a1,1,0,0,1,1.414,1.414L25.414,24Z"></path>
         </svg>
         <div class="text-center">
-          <h3 class="md:text-2xl text-base text-gray-900 font-semibold">Pagamento feito!</h3>
-          <p class="text-gray-600 my-2">Obrigado por comprar nossos cursos!</p>
-          <p class="text-gray-600">Tenha um ótimo dia!</p>
+          <h3 class="md:text-2xl text-base text-gray-900 font-semibold">!Error!</h3>
+          <p class="text-gray-600 my-2">Seu pagamento não foi concluido :C</p>
+          <p class="text-gray-600">Volte e tente novamente</p>
           <div class="py-10 text-center">
             <InertiaLink :href="route('Index')" class="px-12 bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 rounded-full">
                 Voltar
