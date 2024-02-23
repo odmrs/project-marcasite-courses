@@ -167,7 +167,7 @@ const getCourseById = (id) => {
                   type="text"
                   class="mt-1 block w-full"
                   v-model="form.phone"
-                  placeholder="Formato:(99)9999-9999)"
+                  placeholder="Formato: 9999-9999)"
               />
               <InputError class="mt-2" :message="form.errors.phone" />
           </div>
@@ -248,6 +248,7 @@ const getCourseById = (id) => {
               <td class="px-6 py-4 whitespace-nowrap">{{ student.email }}</td>
               <td class="px-6 py-4 whitespace-nowrap">{{ student.address }}</td>
               <td class="px-6 py-4 whitespace-nowrap">{{ student.status }}</td>
+
               <td class="px-6 py-4 whitespace-nowrap">R$:{{ getCourseById(student.course_id) }}</td>
               <td class="px-6 py-4 whitespace-nowrap">
                 <button class="text-indigo-600 hover:text-indigo-900" @click="editing = true; atual_student_id = student.id">Editar</button>

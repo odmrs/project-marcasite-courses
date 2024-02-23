@@ -1,5 +1,8 @@
 <script setup>
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { ref, defineProps, watch } from 'vue'; // Importe defineProps e watch também
+
+const props = defineProps(['course']); // Defina as props que você espera receber
 
 const form = useForm({
     cardNumber: '',
@@ -8,10 +11,24 @@ const form = useForm({
     remember: false
 });
 
+// Use uma referência para o curso
+const course = ref(null);
+
+// Assista a mudanças na propriedade de curso
+watch(() => props.course, (newVal) => {
+    // Encontre o curso correto com base no course_id do aluno
+    course.value = newVal ? findCourse(newVal.course_id) : null;
+});
+
 const submit = () => {
     form.post(route('stripe.checkout'), {
         onFinish: () => form.reset(),
     });
+}
+
+// Função para encontrar o curso com base no course_id
+const findCourse = (courseId) => {
+    return courses.find(course => course.id === courseId);
 }
 </script>
 
@@ -33,9 +50,10 @@ const submit = () => {
                                 <div class="mb-2">
                                     <img class="-mt-8 inline-flex rounded-full" src="../../../../storage/app/public/images/logo.jpeg" width="64" height="64" alt="User" />
                                 </div>
-                                <h1 class="text-xl leading-snug text-gray-800 font-semibold mb-2">(NOME DO CURSO)</h1>
+                                <!-- Verificar se course não é nulo antes de acessar suas propriedades -->
+                                <h1 class="text-xl leading-snug text-gray-800 font-semibold mb-2">{{ course ? course.course_name : '' }}</h1>
                                 <div class="text-sm">
-                                    (DESCRIÇÂO DO CURSO)
+                                    {{ course ? course.price : '' }} <!-- Exibir o preço -->
                                 </div>
                             </div>
                             <!-- Toggle -->
@@ -82,4 +100,3 @@ const submit = () => {
         </div>
     </div>
 </template>
-

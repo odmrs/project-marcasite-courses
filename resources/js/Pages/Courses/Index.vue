@@ -16,6 +16,9 @@ defineProps(['courses']);
       <div class="flex justify-center w-full" v-if="$page.props.auth.user.is_admin">
         <InertiaLink :href="route('courses.create')" class="inline-block px-60 py-5 bg-blue-500 text-black font-semibold rounded-md transition duration-300 ease-in-out hover:bg-blue-200 hover:text-black text-black underline">Criar Novo Curso</InertiaLink>
       </div>
+      <div class="flex justify-center w-full" v-else>
+        <InertiaLink :href="route('Index')" class="inline-block px-60 py-5 bg-blue-500 text-black font-semibold rounded-md transition duration-300 ease-in-out hover:bg-blue-200 hover:text-black text-black underline">Pagar agora!</InertiaLink>
+      </div>
       <Course
         v-for="course in courses"
         :key="course.id"

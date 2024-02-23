@@ -35,7 +35,6 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('students.index')" :active="route().current('students.index')" v-if="$page.props.auth.user.is_admin">
                                     Painel de controle
                                 </NavLink>
-
                                 <NavLink :href="route('courses.index')" :active="route().current('courses.index')">
                                     Cursos
                                 </NavLink>

@@ -55,7 +55,7 @@ class StudentController extends Controller
             'address' => 'required|string|max:255',
             'company_name' => 'nullable|string|max:255',
             'userType' => 'required|string|in:estudante,profissional,associado',
-            'status' => 'required|string|in:pago,pendente',
+            'status' => 'string|in:pago,pendente',
             'phone' => 'telefone',
             'cellphone' => [
                 'required',
@@ -99,7 +99,7 @@ class StudentController extends Controller
             'address' => 'string|max:255',
             'company_name' => 'nullable|string|max:255',
             'userType' => 'string|in:estudante,profissional,associado',
-            'status' => 'required|string|in:pago,pendente',
+            'status' => 'string|in:pago,pendente',
             'phone' => 'telefone',
             'cellphone' => [
                 'regex:/^\(\d{2}\)\s?\d{4,5}-\d{4}$/'
