@@ -1,12 +1,28 @@
-<p align="center"><a target="_blank"><img src="storage/app/public/images/center-image.png" width="400" alt="Laravel Logo"></a></p>
+<p align="center">
+    <a href="https://marcasite.com.br/" target="_blank">
+    <img src="center-image.png" width="400" alt="Laravel Logo">
+    </a>
+</p>
 
 <p align="center">
-<a href="https://www.php.net/"><img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="laravel"></a>
-<a href="https://laravel.com/"><img src=" 	https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="laravel logo"></a>
-<a href="https://br.vuejs.org/"><img src="https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vue.js&logoColor=4FC08D" alt="Vuejs logo"></a>
-<a href="https://www.mysql.com/"><img src="https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white" alt="mysql logo"></a>
-<a href="https://tailwindcss.com/"><img src=" 	https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="tailwind css logo"></a>
-<a href="https://stripe.com/br"><img src="https://img.shields.io/badge/Stripe-626CD9?style=for-the-badge&logo=Stripe&logoColor=white" alt="tailwind css logo"></a>
+<a href="https://www.php.net/">
+    <img src="https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="laravel">
+</a>
+<a href="https://laravel.com/">
+    <img src="https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="laravel logo">
+</a>
+<a href="https://br.vuejs.org/">
+    <img src="https://img.shields.io/badge/Vue.js-35495E?style=for-the-badge&logo=vue.js&logoColor=4FC08D" alt="Vuejs logo">
+</a>
+<a href="https://www.mysql.com/">
+    <img src="https://img.shields.io/badge/MySQL-00000F?style=for-the-badge&logo=mysql&logoColor=white" alt="mysql logo">
+</a>
+<a href="https://tailwindcss.com/">
+    <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="tailwind css logo">
+</a>
+<a href="https://stripe.com/br">
+    <img src="https://img.shields.io/badge/Stripe-626CD9?style=for-the-badge&logo=Stripe&logoColor=white" alt="tailwind css logo">
+</a>
 </p>
 
 ## Sobre o projeto
