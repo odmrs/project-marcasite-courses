@@ -38,10 +38,5 @@ const currentStatus = ref(studentStatus);
               </div>
           </div>
       </div> 
-
-      <div>
-    <h1>Dashboard</h1>
-    <p>Status do Estudante: {{ currentStatus }}</p>
-  </div>
   </AuthenticatedLayout>
 </template>

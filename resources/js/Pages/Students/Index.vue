@@ -222,7 +222,7 @@ const getCourseById = (id) => {
       <div class="w-full max-w-full overflow-x-auto">
         <div class="flex justify-between mb-4">
         <button class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600" @click="downloadPDF()">Baixar pdf</button>
-        <button class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600" @click="exportToExcel()">Exportar para XLR</button>
+        <button class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600" @click="exportToExcel()">Exportar para XLS</button>
       </div>
         <table class="min-w-full" id="to_pdf">
           <thead class="bg-gray-50">
