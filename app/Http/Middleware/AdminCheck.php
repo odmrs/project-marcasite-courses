@@ -16,7 +16,7 @@ class AdminCheck
     public function handle(Request $request, Closure $next): Response
     {
         // Check authorization just for adms
-        if (!auth()->check() || !auth()->user()->is_admin) {
+        if (! auth()->check() || ! auth()->user()->is_admin) {
             abort(403);
         }
 
