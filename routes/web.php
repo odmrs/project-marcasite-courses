@@ -1,14 +1,14 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CourseController;
-use App\Http\Controllers\StripeController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\StudentController;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\Auth\RegisteredUserController;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -24,7 +24,6 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->name('dashboard');
 
-
 // Routes just for admin
 Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -34,8 +33,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Course's routes
     Route::resource('courses', CourseController::class)
-        ->only(['store', 'update', 'destroy'])
-        ->middleware(['auth', 'verified']);
+        ->only(['store', 'update', 'destroy']);
 
     Route::match(['get', 'post'], '/courses/create', [CourseController::class, 'newCourse'])->name('courses.create');
 
@@ -48,20 +46,21 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     Route::get('students/download', function () {
         $pdf = Pdf::loadview('');
+
         return $pdf->download('students.pdf');
     });
 });
 
 Route::resource('courses', CourseController::class)
-    ->only(['index'])
-    ->middleware(['auth', 'verified']);
+    ->only(['index']);
 
 // Download files
 Route::get('/downloads/{filename}', function ($filename) {
-    $path = storage_path('app/uploads/' . $filename);
-    if (!file_exists($path)) {
+    $path = storage_path('app/uploads/'.$filename);
+    if (! file_exists($path)) {
         abort(404);
     }
+
     return response()->download($path);
 })->where('filename', '.*');
 
@@ -81,4 +80,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
