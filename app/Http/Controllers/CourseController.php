@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Support\Facades\Storage;
-
 
 class CourseController extends Controller
 {
@@ -18,6 +17,7 @@ class CourseController extends Controller
     public function index(): Response
     {
         $courses = Course::with('user:id,name')->latest()->get();
+
         return Inertia::render('Courses/Index', [
             'courses' => $courses,
         ]);
@@ -27,6 +27,16 @@ class CourseController extends Controller
     {
         return Inertia::render('Courses/Create');
     }
+
+    public function editCourse(Course $course)
+    {
+        // $this->authorize('update', $course);
+        return Inertia::render('Courses/Update', [
+            'course' => $course,
+        ]);
+
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -48,12 +58,12 @@ class CourseController extends Controller
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
             'max_students' => 'required|integer|min:5',
-            'file_upload' => 'nullable|mimes:csv,txt,xlx,xls,pdf|max:2048'
+            'file_upload' => 'nullable|mimes:csv,txt,xlx,xls,pdf|max:2048',
         ]);
 
         // Store a file into -> storage/uploads/
         if ($request->hasFile('file_upload')) {
-            $filename = uniqid() . '.' . $request->file('file_upload')->getClientOriginalExtension();
+            $filename = uniqid().'.'.$request->file('file_upload')->getClientOriginalExtension();
             $file_upload = $request->file('file_upload')->storeAs('uploads', $filename);
             $validated['file_upload'] = $filename;
         }
@@ -76,7 +86,9 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        //
+        return Inertia::render('Courses/Update', [
+            'course' => $course,
+        ]);
     }
 
     /**
@@ -103,10 +115,9 @@ class CourseController extends Controller
 
         $validated = $request->validate($validationRules);
 
-
         if ($request->hasFile('file_upload')) {
-            Storage::delete('uploads/' . $course->file_upload);
-            $filename = uniqid() . '.' . $request->file('file_upload')->getClientOriginalExtension();
+            Storage::delete('uploads/'.$course->file_upload);
+            $filename = uniqid().'.'.$request->file('file_upload')->getClientOriginalExtension();
             $file_upload = $request->file('file_upload')->storeAs('uploads', $filename);
             $validated['file_upload'] = $filename;
         }
@@ -117,8 +128,6 @@ class CourseController extends Controller
         return redirect(route('courses.index'));
     }
 
-
-
     /**
      * Remove the specified resource from storage.
      */
@@ -126,6 +135,7 @@ class CourseController extends Controller
     {
         $this->authorize('delete', $course);
         $course->delete();
+
         return redirect(route('courses.index'));
     }
 }

@@ -33,7 +33,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Course's routes
     Route::resource('courses', CourseController::class)
-        ->only(['store', 'update', 'destroy']);
+        ->only(['store', 'update', 'destroy', 'edit']);
 
     Route::match(['get', 'post'], '/courses/create', [CourseController::class, 'newCourse'])->name('courses.create');
 
