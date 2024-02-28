@@ -43,14 +43,18 @@ const submit = () => {
 
 <template>
     <GuestLayout>
-        <Head title="Cadastro de cursos" />
-
+        <Head title="Edição de cursos" />
+        <div class="text-center">
+            <h1 class="text-4xl font-bold text-gray-500 mb-4">
+                Edição de cursos
+            </h1>
+        </div>
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
         <form @submit.prevent="submit" enctype="multipart/form-data">
             <div>
-                <InputLabel for="course_name" value="Nome do curso" />
+                <InputLabel for="course_name" value="Novo nome do curso" />
                 <TextInput
                     id="course_name"
                     type="text"
@@ -62,7 +66,7 @@ const submit = () => {
             <div>
                 <InputLabel
                     for="course_description"
-                    value="Descrição do curso"
+                    value="Nova descrição do curso"
                 />
                 <TextInput
                     id="course_description"
@@ -87,7 +91,7 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.course_price" />
             </div>
             <div>
-                <InputLabel for="start_date" value="Data de ínicio" />
+                <InputLabel for="start_date" value="Nova data de ínicio" />
                 <input
                     id="start_date"
                     type="date"
@@ -98,7 +102,7 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.start_date" />
             </div>
             <div>
-                <InputLabel for="end_date" value="Data final" />
+                <InputLabel for="end_date" value="Nova data final" />
                 <input
                     id="end_date"
                     type="date"
