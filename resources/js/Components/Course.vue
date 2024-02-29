@@ -78,6 +78,7 @@ const editing = ref(false);
                             <th class="px-4 py-2">Data de Término</th>
                             <th class="px-4 py-2">Max. de Alunos</th>
                             <th class="px-4 py-2">Material</th>
+                            <th class="px-4 py-2">Matricular</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -128,6 +129,13 @@ const editing = ref(false);
                                         >Sem Material</span
                                     >
                                 </template>
+                            </td>
+                            <td>
+                                <a
+                                    :href="route('Index')"
+                                    class="text-blue-500 hover:underline"
+                                    >Comprar!</a
+                                >
                             </td>
                         </tr>
                     </tbody>

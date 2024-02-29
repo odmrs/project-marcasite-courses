@@ -56,12 +56,6 @@ const filteredStudents = computed(() => {
 
 // get id of student to put in route student.update
 let atual_student_id;
-
-// Filter by price of course's student
-const getCourseById = (id) => {
-    const current_course = props.courses.find((course) => course.id === id);
-    return current_course.course_price;
-};
 </script>
 
 <template>
@@ -140,11 +134,6 @@ const getCourseById = (id) => {
                             <th
                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
-                                valor
-                            </th>
-                            <th
-                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                            >
                                 Ações
                             </th>
                         </tr>
@@ -180,10 +169,6 @@ const getCourseById = (id) => {
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 {{ student.status }}
-                            </td>
-
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                R$:{{ getCourseById(student.course_id) }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <button
@@ -227,12 +212,6 @@ import * as XLSX from "xlsx";
 
 export default {
     methods: {
-        getCourseById(id) {
-            const current_course = this.courses.find(
-                (course) => course.id === id
-            );
-            return current_course ? current_course.course_price : "";
-        },
         formatDate(dateString) {
             if (!dateString) return ""; // Retorna uma string vazia se a data for nula ou indefinida
             const date = new Date(dateString);
@@ -252,7 +231,6 @@ export default {
                 Cpf: student.cpf,
                 Endereco: student.address,
                 Status: student.status,
-                Preco_do_Curso: this.getCourseById(student.course_id),
             }));
 
             // Crie uma nova planilha

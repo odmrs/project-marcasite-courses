@@ -10,7 +10,7 @@ defineProps(["courses"]);
 
 const form = useForm({
     name: "",
-    course_id: "",
+    courses_ids: "",
     cpf: "",
     email: "",
     userType: "",
@@ -158,11 +158,12 @@ const submit = () => {
             </div>
 
             <div>
-                <label for="course_id">Curso:</label>
+                <label for="courses_ids">Curso:</label>
                 <select
-                    v-model="form.course_id"
-                    id="course_id"
+                    v-model="form.courses_ids"
+                    id="courses_ids"
                     class="mt-1 block w-full"
+                    multiple
                 >
                     <option value="">Selecione um curso</option>
                     <option
