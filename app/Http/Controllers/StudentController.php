@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Student;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Models\Course;
-use Illuminate\Http\RedirectResponse;
-
 
 class StudentController extends Controller
 {
@@ -22,7 +21,7 @@ class StudentController extends Controller
 
         return Inertia::render('Students/Index', [
             'students' => $students,
-            'courses' => $courses
+            'courses' => $courses,
         ]);
     }
 
@@ -31,9 +30,10 @@ class StudentController extends Controller
         $courses = Course::all();
 
         return Inertia::render('Students/Create', [
-            'courses' => $courses
+            'courses' => $courses,
         ]);
     }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -59,7 +59,7 @@ class StudentController extends Controller
             'phone' => 'telefone',
             'cellphone' => [
                 'required',
-                'regex:/^\(\d{2}\)\s?\d{4,5}-\d{4}$/'
+                'regex:/^\(\d{2}\)\s?\d{4,5}-\d{4}$/',
             ],
             'password' => 'required|string|min:6|max:255',
         ]);
@@ -68,7 +68,6 @@ class StudentController extends Controller
 
         return redirect(route('students.index'));
     }
-
 
     /**
      * Display the specified resource.
@@ -83,31 +82,36 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+        return inertia::render('Students/Update', [
+            'student' => $student,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, Student $student): RedirectResponse
     {
-        $validated = $request->validate([
+        $validatedRulesValidation = [
             'name' => 'string|max:255',
             'course_id' => 'exists:courses,id',
-            'email' => 'email|unique:students,email',
-            'cpf' => 'cpf|unique:students,cpf',
+            'email' => 'email',
+            'cpf' => 'cpf',
             'address' => 'string|max:255',
             'company_name' => 'nullable|string|max:255',
             'userType' => 'string|in:estudante,profissional,associado',
             'status' => 'string|in:pago,pendente',
             'phone' => 'telefone',
             'cellphone' => [
-                'regex:/^\(\d{2}\)\s?\d{4,5}-\d{4}$/'
+                'regex:/^\(\d{2}\)\s?\d{4,5}-\d{4}$/',
             ],
             'password' => 'string|min:6|max:255',
-        ]);
+        ];
+        $validated = $request->validate($validatedRulesValidation);
 
         $student->update($validated);
+
+        return redirect(route('students.index'));
     }
 
     /**
@@ -116,6 +120,7 @@ class StudentController extends Controller
     public function destroy(Student $student): RedirectResponse
     {
         $student->delete();
+
         return redirect(route('students.index'));
     }
 }

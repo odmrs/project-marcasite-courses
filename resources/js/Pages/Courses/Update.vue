@@ -7,9 +7,8 @@ import TextInput from "@/Components/TextInput.vue";
 import { Head, Link, useForm } from "@inertiajs/vue3";
 import { defineProps } from "vue";
 
-// Define as propriedades que são passadas para o componente
 const props = defineProps({
-    course: Object, // Define course como uma propriedade de tipo Object
+    course: Object,
 });
 
 const updateEndDateMin = () => {

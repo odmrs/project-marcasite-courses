@@ -39,7 +39,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Student's routes
     Route::resource('students', StudentController::class)
-        ->only(['index', 'store', 'update', 'destroy'])
+        ->only(['index', 'store', 'update', 'destroy', 'edit'])
         ->middleware(['auth', 'verified']);
 
     Route::match(['get', 'post'], '/students/create', [StudentController::class, 'newStudent'])->name('students.create');
