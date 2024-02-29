@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\MyCourseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\StudentController;
@@ -33,7 +34,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
     // Course's routes
     Route::resource('courses', CourseController::class)
-        ->only(['store', 'update', 'destroy', 'edit']);
+        ->only(['store', 'update', 'destroy', 'edit', 'show']);
 
     Route::match(['get', 'post'], '/courses/create', [CourseController::class, 'newCourse'])->name('courses.create');
 
@@ -64,13 +65,14 @@ Route::get('/downloads/{filename}', function ($filename) {
     return response()->download($path);
 })->where('filename', '.*');
 
-Route::middleware('auth')->group(function () {
-    // Stripe Routes
-    Route::get('stripe', [StripeController::class, 'index'])->name('Index');
-    Route::get('stripe/success', [StripeController::class, 'success'])->name('stripe.success');
-    Route::get('stripe/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
+// Stripe Routes
+Route::get('stripe', [StripeController::class, 'index'])->name('Index');
+Route::get('stripe/success', [StripeController::class, 'success'])->name('stripe.success');
+Route::get('stripe/cancel', [StripeController::class, 'cancel'])->name('stripe.cancel');
 
-    Route::post('stripe/checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
+Route::post('stripe/checkout', [StripeController::class, 'checkout'])->name('stripe.checkout');
+
+Route::middleware('auth')->group(function () {
 
     // Chech auth edit profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -78,6 +80,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
+    // My courses
+
+    Route::get('allcourses', [MyCourseController::class, 'index'])->name('courses.all');
+});
 require __DIR__.'/auth.php';
