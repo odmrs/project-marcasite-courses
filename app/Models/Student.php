@@ -10,22 +10,23 @@ class Student extends Model
     use HasFactory;
 
     protected $fillable = [
-        "name",
-        "course_id",
-        "email",
-        "cpf",
+        'name',
+        'course_id',
+        'email',
+        'cpf',
         'userType',
-        "address",
-        "company_name",
-        "phone",
-        "cellphone",
-        "password",
+        'address',
+        'company_name',
+        'phone',
+        'cellphone',
+        'password',
         'status',
     ];
+
     // Relation with Course database
-    public function course()
+    public function courses()
     {
-        return $this->belongsTo(Course::class);
+        return $this->belongsToMany(Course::class);
     }
 
     protected static function booted()

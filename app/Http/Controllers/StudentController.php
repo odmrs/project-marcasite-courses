@@ -64,7 +64,10 @@ class StudentController extends Controller
             'password' => 'required|string|min:6|max:255',
         ]);
 
-        Student::create($validated);
+        $student = Student::create($validated);
+
+        $courseId = $request->input('course_id');
+        $student->courses()->attach($courseId);
 
         return redirect(route('students.index'));
     }
@@ -110,6 +113,9 @@ class StudentController extends Controller
         $validated = $request->validate($validatedRulesValidation);
 
         $student->update($validated);
+
+        $courseIds = $request->input('course_ids', []);
+        $student->courses()->sync($courseIds);
 
         return redirect(route('students.index'));
     }

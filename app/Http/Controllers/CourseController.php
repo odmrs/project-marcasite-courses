@@ -68,7 +68,9 @@ class CourseController extends Controller
             $validated['file_upload'] = $filename;
         }
 
-        $request->user()->courses()->create($validated);
+        $course = $request->user()->courses()->create($validated);
+        $studentIds = $request->input('student_ids', []); // Receber os IDs dos alunos selecionados
+        $course->students()->attach($studentIds);
 
         return redirect(route('courses.index'));
     }
@@ -124,6 +126,9 @@ class CourseController extends Controller
 
         // Atualiza o curso com os dados validados
         $course->update($validated);
+
+        $studentIds = $request->input('student_ids', []); // Receber os IDs dos alunos selecionados
+        $course->students()->sync($studentIds);
 
         return redirect(route('courses.index'));
     }

@@ -17,8 +17,13 @@ class Course extends Model
         'start_date',
         'end_date',
         'max_students',
-        'file_upload'
+        'file_upload',
     ];
+
+    public function students()
+    {
+        return $this->belongsToMany(Student::class);
+    }
 
     public function user(): BelongsTo
     {
