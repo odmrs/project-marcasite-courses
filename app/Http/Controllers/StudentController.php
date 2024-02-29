@@ -19,6 +19,7 @@ class StudentController extends Controller
         $students = Student::all();
         $courses = Course::all();
 
+        // TODO change to many to many after
         return Inertia::render('Students/Index', [
             'students' => $students,
             'courses' => $courses,
@@ -49,7 +50,6 @@ class StudentController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'course_id' => 'required|exists:courses,id',
             'email' => 'required|email|unique:students,email',
             'cpf' => 'required|cpf|unique:students,cpf',
             'address' => 'required|string|max:255',
@@ -63,11 +63,10 @@ class StudentController extends Controller
             ],
             'password' => 'required|string|min:6|max:255',
         ]);
-
+        $courses = $request->input('courses_ids');
         $student = Student::create($validated);
 
-        $courseId = $request->input('course_id');
-        $student->courses()->attach($courseId);
+        $student->courses()->attach($courses);
 
         return redirect(route('students.index'));
     }
@@ -97,7 +96,6 @@ class StudentController extends Controller
     {
         $validatedRulesValidation = [
             'name' => 'string|max:255',
-            'course_id' => 'exists:courses,id',
             'email' => 'email',
             'cpf' => 'cpf',
             'address' => 'string|max:255',
@@ -113,9 +111,8 @@ class StudentController extends Controller
         $validated = $request->validate($validatedRulesValidation);
 
         $student->update($validated);
-
-        $courseIds = $request->input('course_ids', []);
-        $student->courses()->sync($courseIds);
+        $courses = $request->input('courses_ids');
+        $student->courses()->attach($courses);
 
         return redirect(route('students.index'));
     }

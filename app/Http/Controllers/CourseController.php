@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Course;
+use App\Models\Student;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -40,9 +41,12 @@ class CourseController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Course $course, Student $student): RedirectResponse
     {
-        //
+        $course->students()->attach($student);
+
+        return redirect(route('Index'));
+
     }
 
     /**
@@ -80,7 +84,9 @@ class CourseController extends Controller
      */
     public function show(Course $course)
     {
-        //
+        return Inertia::render('Courses/Update', [
+            'course' => $course,
+        ]);
     }
 
     /**

@@ -35,7 +35,7 @@ class StudentObserver
      */
     public function deleted(Student $student): void
     {
-
+        //
     }
 
     /**
