@@ -28,23 +28,4 @@ class Student extends Model
     {
         return $this->belongsToMany(Course::class);
     }
-
-    protected static function booted()
-    {
-        static::created(function ($student) {
-            $course = $student->course;
-
-            if ($course) {
-                $course->decrement('max_students');
-            }
-        });
-
-        static::deleted(function ($student) {
-            $course = $student->course;
-
-            if ($course) {
-                $course->increment('max_students');
-            }
-        });
-    }
 }

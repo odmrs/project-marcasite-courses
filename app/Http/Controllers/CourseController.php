@@ -102,12 +102,12 @@ class CourseController extends Controller
 
         // Define a regra de validação para o campo file_upload
         $validationRules = [
-            'course_name' => 'required|string|max:255',
-            'course_description' => 'required|string',
-            'course_price' => 'required|numeric|min:0',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-            'max_students' => 'required|integer|min:5',
+            'course_name' => 'string|max:255',
+            'course_description' => 'string',
+            'course_price' => 'numeric|min:0',
+            'start_date' => 'date',
+            'end_date' => 'date|after_or_equal:start_date',
+            'max_students' => 'integer|min:5',
         ];
 
         // I create this to fix bug of file, don't upgrade the tabe

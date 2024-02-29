@@ -5,26 +5,9 @@ import InputError from "@/Components/InputError.vue";
 
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 
-import { useForm } from "@inertiajs/vue3";
-
 import { ref } from "vue";
 
-const updateEndDateMin = () => {
-    form.end_date = form.start_date;
-};
-
 const props = defineProps(["course"]);
-
-const form = useForm({
-    course_name: props.course.course_name,
-    course_description: props.course.course_description,
-    course_price: props.course.course_price,
-    start_date: props.course.start_date,
-    end_date: props.course.end_date,
-    max_students: props.course.max_students,
-    file_upload: props.course.file_upload,
-    remember: false,
-});
 
 const editing = ref(false);
 </script>
